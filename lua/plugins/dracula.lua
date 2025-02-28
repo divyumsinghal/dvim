@@ -45,7 +45,8 @@ return {
         })
 
         -- Apply the theme
-       -- vim.cmd('colorscheme dracula-soft')
+       
+        vim.cmd('colorscheme dracula-soft')
 
         -- Configure highlights for comments
         vim.cmd([[highlight Comment gui=italic]])

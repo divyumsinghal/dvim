@@ -8,33 +8,13 @@ return {
 
     config = function()
 
-        local git_available = vim.fn.executable "git" == 1
-        local devicons = require("nvim-web-devicons")
-
-        local function get_icon(icon_name, _size, _use_color)
-            local icon, _ = devicons.get_icon(name, nil, {
-                default = true
-            })
-            return icon or fallback
-        end
-
-        local sources = {{
-            source = "filesystem",
-            display_name = get_icon("FolderClosed", 1, true) .. "File"
-        }, {
-            source = "buffers",
-            display_name = get_icon("DefaultFile", 1, true) .. "Bufs"
-        }, {
-            source = "diagnostics",
-            display_name = get_icon("Diagnostic", 1, true) .. "Diagnostic"
-        }}
-
-        if git_available then
-            table.insert(sources, 3, {
-                source = "git_status",
-                display_name = get_icon("Git", 1, true) .. "Git"
-            })
-        end
+        local sources = {
+            { source = "filesystem", display_name = " File" },
+            { source = "buffers", display_name = " Buffers" },
+            { source = "diagnostics", display_name = " Diagnostics" },
+            { source = "git_status", display_name = " Git" },
+            { source = "document_symbols", display_name = "# Symbols" }
+        }
 
         require('neo-tree').setup {
             auto_clean_after_session_restore = true,
@@ -43,11 +23,12 @@ return {
             popup_border_style = 'rounded', -- Border style for popups
             enable_git_status = true, -- Show git status
             enable_diagnostics = true, -- Show diagnostics
-            sources = {"filesystem", "buffers", git_available and "git_status" or nil},
-            source_selector = {
+                        source_selector = {
                 winbar = true,
                 content_layout = "center",
-                sources = sources
+                sources = sources,
+        statusline = true,
+        git_status = true
             },
             default_component_configs = {
                 indent = {
@@ -59,7 +40,22 @@ return {
                 modified = {
                     symbol = '[+]',
                     highlight = 'NeoTreeModified'
-                }
+                },
+         diagnostics = {
+            symbols = {
+                hint = "󰌵", -- Hint
+                info = "",  -- Info
+                warn = "",  -- Warning
+                error = ""  -- Error
+            },
+            highlights = {
+                hint = "DiagnosticHint",
+                info = "DiagnosticInfo",
+                warn = "DiagnosticWarn",
+                error = "DiagnosticError"
+            }
+        }
+
             },
             event_handlers = {{
                 event = "file_opened",
