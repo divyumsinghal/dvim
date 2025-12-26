@@ -13,20 +13,6 @@ local map = function(keys, func, desc, mode, buf)
 
 end
 
--- Personal remapping: Switching `j` and `k` (up and down)
-local modes = {'', 'n', 'v', 'o'}
-for _, mode in ipairs(modes) do
-    map('j', 'k', 'Switch `j` with `k` (up)', mode)
-    map('k', 'j', 'Switch `k` with `j` (down)', mode)
-
-    map('<C-j>', '<C-k>', 'Switch `<C-j>` with `<C-k>` (up)', mode)
-    map('<C-k>', '<C-j>', 'Switch `<C-k>` with `<C-j>` (down)', mode)
-end
-
--- Insert mode remapping for `<C-j>` and `<C-k>`
-map('<C-j>', '<C-k>', 'Switch `<C-j>` with `<C-k>` (up)', 'i')
-map('<C-k>', '<C-j>', 'Switch `<C-k>` with `<C-j>` (down)', 'i')
-
 
 -- cmp
 local cmp = require("cmp")
